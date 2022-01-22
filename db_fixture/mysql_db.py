@@ -35,10 +35,12 @@ class DB:
         except OperationalError as e:
             print("Mysql Error %d: %s" % (e.args[0],e.args[1]))
 
+
    # 清除表数据
     def clear(self,table_name):
+        conn = self.conn
         real_sql = "delete from " + table_name + ";"
-        with self.conn.cursor() as cursor:
+        with conn.cursor() as cursor:
              # 取消表的外键约束
             cursor.execute("SET FOREIGN_KEY_CHECKS=0;")
             cursor.execute(real_sql)
